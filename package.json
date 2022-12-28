@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@parcel/plugin": "^2.8.2",
+    "deepmerge": "^4.2.2",
     "fast-glob": "^3.2.12",
     "normalize-path": "^3.0.0"
   },

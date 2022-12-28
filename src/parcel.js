@@ -3,6 +3,7 @@ require('./extensions');
 const fs = require('fs/promises');
 const files = require('./files');
 const path = require('path');
+const merge = require('deepmerge');
 
 /**
  * @typedef {{
@@ -17,17 +18,45 @@ const path = require('path');
  * }} ISettings
  */
 
+function canAccess(path, mode) {
+  return fs
+    .access(path, fs.constants.R_OK)
+    .then(() => true)
+    .catch(() => false);
+}
+
 /**
- * Returns the `parcel` settings from the `package.json` file in the specified project root directory.
+ * Returns the `parcel` settings from the `package.json` and or the `parcel-reporter-files.json` file in the specified project root directory.
  *
  * @param {string} projectRoot - The path to the project root directory.
- * @returns {Promise<ISettings>} A promise that resolves to the `parcel settings` from the `package.json` file.
+ * @returns {Promise<ISettings>} A promise that resolves to the `parcel settings` object.
  */
 async function settings(projectRoot) {
-  const buffer = await fs.readFile(path.join(projectRoot, 'package.json'));
-  const packageJson = JSON.parse(buffer);
+  let settings = {};
 
-  return packageJson['parcel-reporter-files'] || {};
+  const packageJson = path.join(projectRoot, 'package.json');
+  const reporterJson = path.join(projectRoot, 'parcel-reporter-files.json');
+
+  if (await canAccess(packageJson, fs.constants.R_OK)) {
+    const buffer = await fs.readFile(packageJson);
+
+    settings = merge(settings, JSON.parse(buffer)['parcel-reporter-files'] || {});
+  }
+
+  if (await canAccess(reporterJson, fs.constants.R_OK)) {
+    const buffer = await fs.readFile(reporterJson);
+
+    settings = merge(settings, JSON.parse(buffer), {
+      arrayMerge: (target, source, options) =>
+        target
+          .concat(source)
+          .filter(
+            (value, index, array) => array.findIndex((item) => JSON.stringify(item) === JSON.stringify(value)) === index
+          ),
+    });
+  }
+
+  return settings;
 }
 
 /**

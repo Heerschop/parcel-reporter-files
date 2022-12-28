@@ -103,12 +103,6 @@ function splitGlob(path) {
 async function copy(source, target) {
   const match = splitGlob(source);
 
-  console.log('source:', source);
-  console.log('target:', target);
-  console.log('match:', match);
-
-  console.log();
-
   target = normalize(target, false);
 
   if (match.pattern) return globCopy(match.path, target, match.pattern);
@@ -143,13 +137,7 @@ async function globCopy(source, target, pattern) {
       cwd: source,
     });
 
-    console.log('entries:', entries);
-
     for (const entry of entries) {
-      console.log('copyFile.source:', source + entry);
-      console.log('copyFile.target:', target + entry);
-      console.log();
-
       promises.push(
         fs
           .mkdir(path.dirname(target + entry), { recursive: true })
@@ -180,7 +168,12 @@ module.exports = { purge, remove, copy };
 //   // patternCopy('temp/source', 'temp/target', '**');
 //   //console.log('splitGlobPattern:', splitGlob('temp//target/aaa'));
 //   //copy('temp/source/**/*1', 'temp/target');
-//   await copy('temp/source/**', 'temp/target/');
+//   try {
+//     await copy('temp/source', 'temp/target/');
+//     await copy('temp/source', 'temp/target/');
+//   } catch (error) {
+//     console.log(error);
+//   }
 //   // await remove('temp/target/**');
 //   // //await remove('temp/target/**');
 
@@ -191,7 +184,12 @@ module.exports = { purge, remove, copy };
 
 //   // entries.sort((entry1, entry2) => entry2.length - entry1.length);
 
-//   purge('temp/target', ['temp/target/directory3']);
+//   //purge('temp/target', ['temp/target/directory3']);
 
-//   //console.log('entries:', entries);
+//   // const stat = await fs
+//   //   .access('package.json', fs.constants.R_OK)
+//   //   .then(() => true)
+//   //   .catch(() => false);
+
+//   // console.log('stat:', stat);
 // })();
