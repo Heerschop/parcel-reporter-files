@@ -10,6 +10,8 @@ const hooksReporter = new Reporter({
       if (settings.remove) await parcel.remove(settings.remove, bundles);
 
       if (settings.copy) await parcel.copy(settings.copy, bundles);
+
+      if (settings.cleanup) await parcel.remove(settings.cleanup, bundles);
     }
   },
 });

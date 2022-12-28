@@ -1,3 +1,5 @@
+require('./extensions');
+
 const fs = require('fs/promises');
 const files = require('./files');
 const path = require('path');
@@ -11,6 +13,7 @@ const path = require('path');
  * @typedef {{
  *   remove: string | string[];
  *   copy: ICopy[];
+ *   cleanup: string | string[];
  * }} ISettings
  */
 
@@ -36,22 +39,23 @@ async function settings(projectRoot) {
  */
 async function remove(items, bundles) {
   const targets = new Set();
-  const exculdes = new Set();
-  const pattern = new RegExp('\\' + path.sep + '$');
+  let excludes = new Set();
 
   for (const bundle of bundles) {
-    targets.add(bundle.target.distDir.replace(pattern, '') + path.sep);
-    exculdes.add(bundle.filePath);
+    targets.add(bundle.target.distDir.trimEnd(path.sep) + path.sep);
+    excludes.add(bundle.filePath);
 
-    if (['.js', '.css'].includes(path.extname(bundle.filePath))) exculdes.add(bundle.filePath + '.map');
+    if (['.js', '.css'].includes(path.extname(bundle.filePath))) excludes.add(bundle.filePath + '.map');
   }
 
   const promises = [];
 
+  excludes = Array.from(excludes);
+
   for (const target of targets) {
     for (const item of items) {
       if (item === '*') {
-        promises.push(files.purge(target, exculdes));
+        promises.push(files.purge(target, excludes));
       } else {
         promises.push(files.remove(target + item));
       }
@@ -71,10 +75,9 @@ async function remove(items, bundles) {
 async function copy(items, bundles) {
   const targets = new Set(bundles.filter((bundle) => bundle?.target.distDir).map((bundle) => bundle.target.distDir));
   const promises = [];
-  const pattern = new RegExp('\\' + path.sep + '$');
 
   for (const target of targets) {
-    const targetPath = target.replace(pattern, '') + path.sep;
+    const targetPath = target.trimEnd(path.sep) + path.sep;
 
     for (const item of items) {
       let source = item;

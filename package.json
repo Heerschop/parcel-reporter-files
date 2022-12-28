@@ -2,8 +2,28 @@
   "name": "parcel-reporter-files",
   "version": "1.0.0",
   "description": "Parcel reporter for file related operations on the buildSuccess event",
+  "keywords": [
+    "parcel",
+    "reporter",
+    "static",
+    "files",
+    "copy",
+    "remove"
+  ],
   "main": "src/index.js",
   "scripts": {},
   "author": "Bas Heerschop",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:Heerschop/parcel-reporter-files.git"
+  },
+  "dependencies": {
+    "@parcel/plugin": "^2.8.2",
+    "fast-glob": "^3.2.12",
+    "normalize-path": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/normalize-path": "^3.0.0"
+  }
 }
