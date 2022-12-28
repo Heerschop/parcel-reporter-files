@@ -1,5 +1,9 @@
 {
   "name": "parcel-reporter-files",
   "version": "1.0.0",
-  "main": "index.js"
+  "description": "Parcel reporter for file related operations on the buildSuccess event",
+  "main": "src/index.js",
+  "scripts": {},
+  "author": "Bas Heerschop",
+  "license": "MIT"
 }
