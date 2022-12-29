@@ -9,7 +9,7 @@ Parcel plugin for file related operations:
 ## Installation
 
 ```bash
-npm install git@github.com:Heerschop/parcel-reporter-files.git#basic-setup --save-dev
+npm install git@github.com:Heerschop/parcel-reporter-files.git#main --save-dev
 ```
 
 ## Update the `.parcelrc` file
@@ -32,7 +32,7 @@ Add the plugin to the Parcel config file.
 
 The plugin configuration can be put in the `package.json` and or in the `parcel-reporter-files.json` file.
 
-### `package.json`
+### Example for: `package.json`
 
 ```json
 {
@@ -47,7 +47,7 @@ The plugin configuration can be put in the `package.json` and or in the `parcel-
 }
 ```
 
-### `parcel-reporter-files.json`
+### Example for: `parcel-reporter-files.json`
 
 ```json
 {
@@ -61,9 +61,9 @@ The plugin configuration can be put in the `package.json` and or in the `parcel-
 
 ## Remove
 
-Remove file and or directories before copy. Can be a single string or an array of strings. The strings can contain glob patterns from: [fast-glob](https://github.com/mrmlnc/fast-glob#readme)
+Remove files and or directories before copy. Can be a single string or an array of strings. The strings can contain glob patterns from: [fast-glob](https://github.com/mrmlnc/fast-glob#readme)
 
-### Remove all files that are not a result of the parcel build process
+#### Remove all files that are not a result of the parcel build process
 
 ```json
 {
@@ -86,7 +86,7 @@ Remove file and or directories before copy. Can be a single string or an array o
 
 Copy file and or directories. Can be an array of strings or and array of objects containing `source` and `target`. The strings can contain glob patterns from: [fast-glob](https://github.com/mrmlnc/fast-glob#readme)
 
-### Copy of images to the root of the dist directory
+#### Copy of images to the root of the dist directory
 
 ```json
 {
