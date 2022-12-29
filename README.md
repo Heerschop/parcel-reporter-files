@@ -121,7 +121,9 @@ The same as [Remove](#remove) but than executes after copy.
 }
 ```
 
-## Code Style
+## Development
+
+### Update Code Style
 
 ```bash
 npx prettier --write .
