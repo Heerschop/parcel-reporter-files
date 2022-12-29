@@ -13,14 +13,14 @@ const merge = require('deepmerge');
  *
  * @typedef {{
  *   remove: string | string[];
- *   copy: ICopy[];
+ *   copy: string | ICopy[];
  *   cleanup: string | string[];
  * }} ISettings
  */
 
 function canAccess(path, mode) {
   return fs
-    .access(path, fs.constants.R_OK)
+    .access(path, mode)
     .then(() => true)
     .catch(() => false);
 }
@@ -64,13 +64,15 @@ async function settings(projectRoot) {
 /**
  * Deletes files and directories in the specified bundle target directories, except for the bundle files and their source maps.
  *
- * @param {string[]} items - The names of the items to be removed.
+ * @param {string | string[]} items - The names of the items to be removed.
  * @param {PackagedBundle[]} bundles - An array of bundle objects containing information about the target directories.
  * @return {Promise<void>} A promise that resolves when all items have been removed.
  */
 async function remove(items, bundles) {
   const targets = new Set();
   let excludes = new Set();
+
+  items = Array.isArray(items) ? items : items ? [items] : [];
 
   for (const bundle of bundles) {
     targets.add(bundle.target.distDir.trimEnd(path.sep) + path.sep);
@@ -108,6 +110,8 @@ async function copy(items, bundles) {
     bundles.filter(bundle => bundle?.target.distDir).map(bundle => bundle.target.distDir)
   );
   const promises = [];
+
+  items = Array.isArray(items) ? items : items ? [items] : [];
 
   for (const target of targets) {
     const targetPath = target.trimEnd(path.sep) + path.sep;
