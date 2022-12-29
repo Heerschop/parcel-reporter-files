@@ -120,3 +120,10 @@ The same as [Remove](#remove) but than executes after copy.
   ]
 }
 ```
+
+## Code Style
+
+```bash
+npx prettier --write .
+npx eslint src/*.js
+```
