@@ -71,7 +71,7 @@ Remove files and or directories before copy. Can be a single string or an array 
 }
 ```
 
-### Remove all files that are not a result of the parcel build process, and the `.map` files.
+#### Remove all files that are not a result of the parcel build process, and the `.map` files.
 
 ```json
 {
@@ -96,7 +96,7 @@ Copy file and or directories. Can be an array of strings or and array of objects
 }
 ```
 
-### Copy of images in a dist subdirectory
+#### Copy of images in a dist subdirectory
 
 ```json
 {
