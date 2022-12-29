@@ -52,8 +52,9 @@ async function settings(projectRoot) {
         target
           .concat(source)
           .filter(
-            (value, index, array) => array.findIndex((item) => JSON.stringify(item) === JSON.stringify(value)) === index
-          ),
+            (value, index, array) =>
+              array.findIndex(item => JSON.stringify(item) === JSON.stringify(value)) === index
+          )
     });
   }
 
@@ -103,7 +104,9 @@ async function remove(items, bundles) {
  * @returns {Promise<void>} A promise that resolves when all items have been copied.
  */
 async function copy(items, bundles) {
-  const targets = new Set(bundles.filter((bundle) => bundle?.target.distDir).map((bundle) => bundle.target.distDir));
+  const targets = new Set(
+    bundles.filter(bundle => bundle?.target.distDir).map(bundle => bundle.target.distDir)
+  );
   const promises = [];
 
   for (const target of targets) {

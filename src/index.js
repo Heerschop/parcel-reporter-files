@@ -13,7 +13,7 @@ const hooksReporter = new Reporter({
 
       if (settings.cleanup) await parcel.remove(settings.cleanup, bundles);
     }
-  },
+  }
 });
 
 module.exports = hooksReporter;

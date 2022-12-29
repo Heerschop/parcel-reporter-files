@@ -19,7 +19,7 @@ const POSIX_SEP = '/';
 async function purge(target, exclude) {
   target = normalize(target) + POSIX_SEP;
 
-  exclude = exclude.map((item) => normalize(item, false));
+  exclude = exclude.map(item => normalize(item, false));
 
   const items = await fs.readdir(target);
   const promises = [];
@@ -82,13 +82,13 @@ async function remove(target) {
 function splitGlob(path) {
   const entries = normalize(path, false).split(POSIX_SEP);
 
-  let index = entries.findIndex((item) => item && glob.isDynamicPattern(item));
+  let index = entries.findIndex(item => item && glob.isDynamicPattern(item));
 
   if (index === -1) index = entries.length;
 
   return {
     path: entries.slice(0, index).join(POSIX_SEP),
-    pattern: entries.slice(index).join(POSIX_SEP),
+    pattern: entries.slice(index).join(POSIX_SEP)
   };
 }
 
@@ -111,7 +111,7 @@ async function copy(source, target) {
 
   return fs.cp(source, target, {
     force: true,
-    recursive: true,
+    recursive: true
   });
 }
 
@@ -134,7 +134,7 @@ async function globCopy(source, target, pattern) {
   {
     const entries = await glob(pattern, {
       dot: true,
-      cwd: source,
+      cwd: source
     });
 
     for (const entry of entries) {
@@ -151,7 +151,7 @@ async function globCopy(source, target, pattern) {
     const entries = await glob(pattern, {
       dot: true,
       cwd: source,
-      onlyDirectories: true,
+      onlyDirectories: true
     });
 
     for (const entry of entries) {
