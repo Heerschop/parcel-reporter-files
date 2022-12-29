@@ -47,6 +47,7 @@ async function settings(projectRoot) {
     const buffer = await fs.readFile(reporterJson);
 
     settings = merge(settings, JSON.parse(buffer), {
+      // Prevent duplicate items in the arrays
       arrayMerge: (target, source, options) =>
         target
           .concat(source)
